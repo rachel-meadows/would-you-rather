@@ -2,28 +2,31 @@
   <img src="/img/background.gif" class="background background--faded">
   <h1>Results</h1>
 
-  <p>{{ user }}, you chose {{ userChoice }}.</p>
+  <p>{{ user }}, you chose <em>'{{ userChoice }}'</em>.</p>
   <p>{{ percentAgreeWithUser }}% of people agree with you.</p>
   <p>{{ percentDisagreeWithUser }}% of people disagree with you.</p>
   <p>{{ option1Count }} people chose <em>'{{ option1 }}'</em>.</p>
   <p>{{ option2Count }} people chose <em>'{{ option2 }}'</em>.</p>
 
   <div>
+
     <form method="POST" action="/" method="POST">
-
-    {{!-- The current user --}}
-    <input type="hidden" name="userId" value="{{ user }}">
-    {{!-- The current question --}}
-    <input type="hidden" name="questionId" value="{{ question.id }}">
-
-    <button id="prev" name="prev" value="prev">
-    <button type="submit" value="Prev">
-
-    <button id="next" name="next" value="next">
-    <button type="submit" value="Next">
-
-
+      <button type="submit" id="prev" name="prev" value="prev">
+      {{!-- The current user --}}
+      <input type="hidden" name="userId" value="{{ user }}">
+      {{!-- The current question --}}
+      <input type="hidden" name="questionId" value="{{ question.id }}">
     </form>
+
+    <form method="POST" action="/" method="POST">
+    <button type="submit" id="next" name="next" value="next">
+      {{!-- The current user --}}
+      <input type="hidden" name="userId" value="{{ user }}">
+      {{!-- The current question --}}
+      <input type="hidden" name="questionId" value="{{ question.id }}">
+    </form>
+
+
   </div>
 
 </div>

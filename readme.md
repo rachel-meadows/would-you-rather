@@ -4,8 +4,8 @@ This is a simple game that associates users with their answers to a 'would you r
 
 ## Origins:
 
-The initial code for this game was developed as a Friday group project (essentially a one-day hackathon).
-While we reached MVP for this as a group (showing a single question and aggregate results), I had an idea for a many-to-many database that I want to test.
+An earlier version of this game was developed as a Friday group project (essentially a one-day hackathon).
+While we reached MVP for this as a group (showing a single question and its aggregate results), I had an idea for a many-to-many database that I want to test. I also wanted to make the project dynamically support multiple questions, instead of hard-coding it.
 
 ## Purpose:
 
