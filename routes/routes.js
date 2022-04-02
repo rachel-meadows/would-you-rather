@@ -68,8 +68,14 @@ router.get('/:user/:question/results', async (req, res) => {
   // Get other people's choices for this question
   const questionStats = await db.getStats(userChoice.choiceId, questionId)
 
+  // Get how many questions are in database to inform 'next' button display
+  const numberQuestions = await db.getQuestionsLength()
+
   const viewData = {
-    user: user.name,
+    // Capitalise user's name
+    userId: userId,
+    questionId: questionId,
+    user: user.name[0].toUpperCase() + user.name.substring(1),
     userChoice: userChoice.choiceValue,
     option1: questionStats.option1,
     option2: questionStats.option2,
@@ -77,9 +83,33 @@ router.get('/:user/:question/results', async (req, res) => {
     option2Count: questionStats.option2Count,
     percentAgreeWithUser: questionStats.percentAgreeWithUser,
     percentDisagreeWithUser: questionStats.percentDisagreeWithUser,
+    showBack: questionId > 1,
+    showNext: questionId < numberQuestions,
   }
 
   console.log(viewData)
 
   res.render('results', viewData)
+})
+
+// POST after user clicks 'back' on results page
+// site/back
+router.post('/back', async (req, res) => {
+  const data = req.body
+  const userId = Number(data.userId)
+  const questionId = Number(data.questionId)
+
+  // // Redirect to the next question, retaining the user ID
+  res.redirect(`/${userId}/${questionId - 1}`)
+})
+
+// POST after user clicks 'next' on results page
+// site/next
+router.post('/next', async (req, res) => {
+  const data = req.body
+  const userId = Number(data.userId)
+  const questionId = Number(data.questionId)
+
+  // // Redirect to the next question, retaining the user ID
+  res.redirect(`/${userId}/${questionId + 1}`)
 })

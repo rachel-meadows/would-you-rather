@@ -101,3 +101,8 @@ input[type='radio'] {
 p {
   font-size: 2em;
 }
+
+.back-next {
+  display: flex;
+  font-size: 1.3rem;
+}

@@ -7,6 +7,7 @@ module.exports = {
   getUser,
   getUserChoice,
   getStats,
+  getQuestionsLength,
 }
 
 //
@@ -148,4 +149,9 @@ async function getStats(choice, question, db = connection) {
     percentAgreeWithUser: percentAgree.toFixed(1),
     percentDisagreeWithUser: percentDisagree.toFixed(1),
   }
+}
+
+async function getQuestionsLength(db = connection) {
+  const questionsArray = await db('questions').select()
+  return questionsArray.length
 }

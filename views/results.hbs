@@ -8,24 +8,26 @@
   <p>{{ option1Count }} people chose <em>'{{ option1 }}'</em>.</p>
   <p>{{ option2Count }} people chose <em>'{{ option2 }}'</em>.</p>
 
-  <div>
+  <div class="back-next">
+    {{#if showBack}}
+      <form method="POST" action="/back">
+        {{!-- The current user --}}
+        <input type="hidden" name="userId" value="{{ userId }}">
+        {{!-- The current question --}}
+        <input type="hidden" name="questionId" value="{{ questionId }}">
+        <button type="submit">Back</button>
+      </form>
+    {{/if}}
 
-    <form method="POST" action="/" method="POST">
-      <button type="submit" id="prev" name="prev" value="prev">
-      {{!-- The current user --}}
-      <input type="hidden" name="userId" value="{{ user }}">
-      {{!-- The current question --}}
-      <input type="hidden" name="questionId" value="{{ question.id }}">
-    </form>
-
-    <form method="POST" action="/" method="POST">
-    <button type="submit" id="next" name="next" value="next">
-      {{!-- The current user --}}
-      <input type="hidden" name="userId" value="{{ user }}">
-      {{!-- The current question --}}
-      <input type="hidden" name="questionId" value="{{ question.id }}">
-    </form>
-
+    {{#if showNext}}
+      <form method="POST" action="/next">
+        {{!-- The current user --}}
+        <input type="hidden" name="userId" value="{{ userId }}">
+        {{!-- The current question --}}
+        <input type="hidden" name="questionId" value="{{ questionId }}">
+        <button type="submit">Next</button>
+      </form>
+    {{/if}}
 
   </div>
 
