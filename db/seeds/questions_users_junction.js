@@ -4,28 +4,11 @@
  */
 exports.seed = async function (knex) {
   // Deletes ALL existing entries
-  await knex('questions').del()
-  await knex('questions').insert([
-    {
-      id: 1,
-      option_1: 'Be able to turn invisible',
-      option_2: 'Be able to fly',
-      option_1_count: 0,
-      option_2_count: 0,
-    },
-    {
-      id: 2,
-      option_1: 'Have a working lightsaber',
-      option_2: 'Have a flaming sword',
-      option_1_count: 0,
-      option_2_count: 0,
-    },
-    {
-      id: 3,
-      option_1: 'Be completely covered in scales',
-      option_2: 'Be completely covered in hair',
-      option_1_count: 0,
-      option_2_count: 0,
-    },
+  await knex('questions_users_junction').del()
+  await knex('questions_users_junction').insert([
+    { question_id: 1, user_id: 1, choice: 1 },
+    { question_id: 2, user_id: 1, choice: 1 },
+    { question_id: 3, user_id: 2, choice: 1 },
+    { question_id: 1, user_id: 3, choice: 2 },
   ])
 }

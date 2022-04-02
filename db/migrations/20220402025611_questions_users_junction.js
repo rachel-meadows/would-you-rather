@@ -7,6 +7,7 @@ exports.up = function (knex) {
     table.integer('question_id').references('id').inTable('questions')
     table.integer('user_id').references('id').inTable('users')
     table.primary(['user_id', 'question_id'])
+    table.integer('choice')
   })
 }
 

@@ -1,13 +1,16 @@
-{{!--   <input type="hidden" name="id" value="{{user.id}}"> --}}
+<h1>Would you rather:</h1>
 
-
-
-  {{!-- <label for="option1">{{ question.option1 }}</label>
+<form method="POST" action="/results" method="POST">
+  {{!-- The two options for a question --}}
+  <label for="option1">{{ question.option1 }}</label>
   <input type="radio" name="choice" value="1">
-  <label for="option2">{{ question.option1 }}</label>
+  <label for="option2">{{ question.option2 }}</label>
   <input type="radio" name="choice" value="2">
-  <input class="button" type="submit" value="submit"> --}}
 
-  <h1>Would you rather:</h1>
-  {{ question.option1 }}
-  {{ question.option2 }}
+  {{!-- The current user --}}
+  <input type="hidden" name="userId" value="{{ user }}">
+  {{!-- The current question --}}
+  <input type="hidden" name="questionId" value="{{ question.id }}">
+
+  <input class="button" type="submit" value="submit">
+</form>
