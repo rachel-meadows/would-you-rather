@@ -117,6 +117,26 @@ async function getStats(choice, question, db = connection) {
   option1Count = option1CountObj.option1Count
   option2Count = option2CountObj.option2Count
 
+  // Get the names of people who agree with the user
+  let relevantUsersObj = await db('questions_users_junction')
+    // Get only the answers to the current question
+    .where('question_id', question)
+    .select('user_id', 'choice')
+  let relevantUsersArray = Array(relevantUsersObj)
+  relevantUsersArray = relevantUsersArray[0]
+  let userChoices = []
+  relevantUsersArray.forEach((user) => {
+    // Filter for those who chose the same as the current user
+    if (user.choice === choice) {
+      userChoices.push(user.user_id)
+    }
+  })
+  let agreeUserNames = []
+  for (userId of userChoices) {
+    let userName = await db('users').where('id', userId).first().select('name')
+    agreeUserNames.push(userName.name)
+  }
+
   // Get strings of the questions from db
   let option1Obj = await db('questions')
     .where('id', question)
@@ -148,6 +168,7 @@ async function getStats(choice, question, db = connection) {
     option2Count: option2Count,
     percentAgreeWithUser: percentAgree.toFixed(1),
     percentDisagreeWithUser: percentDisagree.toFixed(1),
+    agreeUserNames: agreeUserNames,
   }
 }
 

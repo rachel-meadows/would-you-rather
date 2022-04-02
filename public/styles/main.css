@@ -94,7 +94,7 @@ input[type='radio'] {
   margin-bottom: 10px;
 }
 
-.form__submit {
+.form__submit, button {
   cursor: pointer;
 }
 
@@ -104,5 +104,11 @@ p {
 
 .back-next {
   display: flex;
+  gap: 15px;
+}
+
+.back-next__button {
   font-size: 1.3rem;
+  padding: 10px 20px;
+  height: 100%;
 }

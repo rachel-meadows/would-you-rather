@@ -83,6 +83,7 @@ router.get('/:user/:question/results', async (req, res) => {
     option2Count: questionStats.option2Count,
     percentAgreeWithUser: questionStats.percentAgreeWithUser,
     percentDisagreeWithUser: questionStats.percentDisagreeWithUser,
+    agreeUserNames: questionStats.agreeUserNames,
     showBack: questionId > 1,
     showNext: questionId < numberQuestions,
   }

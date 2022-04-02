@@ -3,10 +3,15 @@
   <h1>Results</h1>
 
   <p>{{ user }}, you chose <em>'{{ userChoice }}'</em>.</p>
-  <p>{{ percentAgreeWithUser }}% of people agree with you.</p>
-  <p>{{ percentDisagreeWithUser }}% of people disagree with you.</p>
+  <p><strong>{{ percentAgreeWithUser }}%</strong> of people agree with you.</p>
+  <p><strong>{{ percentDisagreeWithUser }}%</strong> of people disagree with you.</p>
   <p>{{ option1Count }} people chose <em>'{{ option1 }}'</em>.</p>
   <p>{{ option2Count }} people chose <em>'{{ option2 }}'</em>.</p>
+
+  <h2>People who agree with you:</h2>
+  <ul>
+    {{#each agreeUserNames }}<li>{{ this }} </li>{{/each}}
+  </ul>
 
   <div class="back-next">
     {{#if showBack}}
@@ -15,7 +20,7 @@
         <input type="hidden" name="userId" value="{{ userId }}">
         {{!-- The current question --}}
         <input type="hidden" name="questionId" value="{{ questionId }}">
-        <button type="submit">Back</button>
+        <button type="submit" class="back-next__button">Back</button>
       </form>
     {{/if}}
 
@@ -25,7 +30,7 @@
         <input type="hidden" name="userId" value="{{ userId }}">
         {{!-- The current question --}}
         <input type="hidden" name="questionId" value="{{ questionId }}">
-        <button type="submit">Next</button>
+        <button type="submit" class="back-next__button">Next</button>
       </form>
     {{/if}}
 
