@@ -66,18 +66,20 @@ router.get('/:user/:question/results', async (req, res) => {
   const userChoice = await db.getUserChoice(userId, questionId)
 
   // Get other people's choices for this question
-  const questionStats = await db.getStats(userChoice.choice, questionId)
+  const questionStats = await db.getStats(userChoice.choiceId, questionId)
 
   const viewData = {
     user: user.name,
-    userChoice: userChoice.choice,
-    questionStats: questionStats,
+    userChoice: userChoice.choiceValue,
+    option1: questionStats.option1,
+    option2: questionStats.option2,
+    option1Count: questionStats.option1Count,
+    option2Count: questionStats.option2Count,
+    percentAgreeWithUser: questionStats.percentAgreeWithUser,
+    percentDisagreeWithUser: questionStats.percentDisagreeWithUser,
   }
 
-  console.log('viewData', viewData)
-
-  // TODO
-  // Call function from index.js that gets back rate of other users agreeing / disagreeing
+  console.log(viewData)
 
   res.render('results', viewData)
 })

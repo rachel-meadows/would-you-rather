@@ -78,32 +78,55 @@ function getUser(user, db = connection) {
 }
 
 // Return user choice by userId and questionId
-function getUserChoice(user, question, db = connection) {
-  return db('questions_users_junction')
+async function getUserChoice(user, question, db = connection) {
+  // Todo: Refactor with a join
+  let choiceObj = await db('questions_users_junction')
     .where({
       question_id: question,
       user_id: user,
     })
     .first()
     .select('choice')
+  choice = choiceObj.choice
+
+  const options = await db('questions')
+    .where({
+      id: question,
+    })
+    .first()
+    .select('option_1', 'option_2')
+
+  return {
+    choiceId: choice,
+    choiceValue: options[`option_${choice}`],
+  }
 }
 
 // See what proportion of people agree with the current user
 async function getStats(choice, question, db = connection) {
   // Get option_1_count and option_2_count from db
-  let option1Count = await db('questions')
+  let option1CountObj = await db('questions')
     .where('id', question)
     .first()
-    .select('option_1_count')
-  let option2Count = await db('questions')
+    .select('option_1_count as option1Count')
+  let option2CountObj = await db('questions')
     .where('id', question)
     .first()
-    .select('option_2_count')
-  option1Count = option1Count.option_1_count
-  option2Count = option2Count.option_2_count
+    .select('option_2_count as option2Count')
+  option1Count = option1CountObj.option1Count
+  option2Count = option2CountObj.option2Count
 
-  console.log('option1Count', option1Count, 'of type', typeof option1Count)
-  console.log('option2Count', option2Count, 'of type', typeof option2Count)
+  // Get strings of the questions from db
+  let option1Obj = await db('questions')
+    .where('id', question)
+    .first()
+    .select('option_1 as option1')
+  let option2Obj = await db('questions')
+    .where('id', question)
+    .first()
+    .select('option_2 as option2')
+  option1 = option1Obj.option1
+  option2 = option2Obj.option2
 
   // Work out % of responses that are the same as user's
   let percentAgree
@@ -118,8 +141,10 @@ async function getStats(choice, question, db = connection) {
 
   // Return an object that gives the popularity of answers
   return {
-    numberOfResponse1: option1Count,
-    numberOfResponse2: option2Count,
+    option1: option1,
+    option2: option2,
+    option1Count: option1Count,
+    option2Count: option2Count,
     percentAgreeWithUser: percentAgree.toFixed(1),
     percentDisagreeWithUser: percentDisagree.toFixed(1),
   }
