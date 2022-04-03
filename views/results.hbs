@@ -41,6 +41,12 @@
         <input type="hidden" name="questionId" value="{{ questionId }}">
         <button type="submit" class="back-next__button">Next</button>
       </form>
+    {{else}}
+      <form method="POST" action="/end">
+        {{!-- The current user --}}
+        <input type="hidden" name="userId" value="{{ userId }}">
+        <button type="submit" class="back-next__button">Next</button>
+      </form> 
     {{/if}}
 
   </div>

@@ -1,0 +1,22 @@
+<div class="wrapper wrapper__results">
+  <img src="/img/background.gif" class="background background--faded">
+  <h1>Looks like we're out of questions!</h1>
+
+  <h2>Would you like to add a question or go back to the start?</h2>
+
+  <form method="POST" action="/add">
+    {{!-- The current user --}}
+    <input type="hidden" name="userId" value="{{ userId }}">
+    {{!-- The current question --}}
+    <input type="hidden" name="questionId" value="{{ questionId }}">
+    <button type="submit" class="back-next__button">Add new question</button>
+  </form>
+
+
+  <form method="POST" action="/">
+    {{!-- The current user --}}
+    <input type="hidden" name="userId" value="{{ userId }}">
+    <button type="submit" class="back-next__button">Back to first question</button>
+  </form>
+
+</div>

@@ -11,13 +11,53 @@ router.get('/', (req, res) => {
 // POST Root route - after name entered
 router.post('/', async (req, res) => {
   const data = req.body
-  const userName = data.name
-  // Add user to database and return id
-  const userId = await db.handleUserName(userName)
+  // Handle case where user has returned to start
+  let userId
+  if (!data.userId) {
+    const userName = data.name
+    // Add user to database and return id
+    userId = await db.handleUserName(userName)
+  } else {
+    userId = data.userId
+  }
   // Start from the first question
   const questionId = 1
+  console.log('the users id is: ', userId)
   // Redirect to the id of the new user
   res.redirect(`/${userId[0]}/${questionId}`)
+})
+
+// GET after user clicks 'next' when there are no further questions
+// site/:user/end
+router.get('/:user/end', (req, res) => {
+  const data = req.params
+  const userId = Number(data.user)
+  const viewData = {
+    userId,
+  }
+  res.render('end', viewData)
+})
+
+// POST after user clicks 'next' when there are no further questions
+// site/end
+router.post('/end', (req, res) => {
+  const data = req.body
+  const userId = Number(data.userId)
+  res.redirect(`/${userId}/end`)
+})
+
+// GET add new question
+// site/add
+router.get('/:user/add', (req, res) => {
+  res.render('add')
+})
+
+// POST add new question
+// site/add
+router.post('/add', (req, res) => {
+  const data = req.body
+  const userId = Number(data.userId)
+  res.redirect(`/${userId}/add`)
 })
 
 // GET question page
@@ -108,11 +148,11 @@ router.post('/back', async (req, res) => {
 
 // POST after user clicks 'next' on results page
 // site/next
-router.post('/next', async (req, res) => {
+router.post('/next', (req, res) => {
   const data = req.body
   const userId = Number(data.userId)
   const questionId = Number(data.questionId)
 
-  // // Redirect to the next question, retaining the user ID
+  // Redirect to the next question, retaining the user ID
   res.redirect(`/${userId}/${questionId + 1}`)
 })
