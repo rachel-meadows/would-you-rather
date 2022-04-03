@@ -112,3 +112,23 @@ p {
   padding: 10px 20px;
   height: 100%;
 }
+
+.results {
+  display: flex;
+  gap: 5vw;
+}
+
+.results__left {
+  line-height: 2.5rem;
+}
+
+.results__right {
+  padding: 20px;
+  border: 2px solid black;
+  border-radius: 4px;
+}
+
+.results__otherUsers {
+  overflow-y: auto;
+  overflow-x: hidden;
+}

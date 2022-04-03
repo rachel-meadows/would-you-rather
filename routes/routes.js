@@ -22,6 +22,7 @@ router.post('/', async (req, res) => {
 
 // GET question page
 // site/:user/:question
+// NOTE: I'm using user ID in route because this is a templating / database exercise, obviously would not do this for a real site
 router.get('/:user/:question', async (req, res) => {
   const userId = req.params.user
   const questionId = Number(req.params.question)
@@ -87,9 +88,6 @@ router.get('/:user/:question/results', async (req, res) => {
     showBack: questionId > 1,
     showNext: questionId < numberQuestions,
   }
-
-  console.log(viewData)
-
   res.render('results', viewData)
 })
 
