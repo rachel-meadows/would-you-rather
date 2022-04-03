@@ -134,7 +134,6 @@ async function getStats(user, choice, question, db = connection) {
   let agreeUserNames = []
   for (userId of userChoices) {
     let userName = await db('users').where('id', userId).first().select('name')
-    console.log('user', user, 'userName.id', userId)
     // Don't add current user to list
     if (user !== userId) {
       agreeUserNames.push(userName.name)
@@ -157,9 +156,15 @@ async function getStats(user, choice, question, db = connection) {
   let percentAgree
   let percentDisagree
   if (choice == 1) {
+    // Remove current user's choice for display purposes
+    option1Count -= 1
+
     percentAgree = (option1Count / (option1Count + option2Count)) * 100
     percentDisagree = (option2Count / (option1Count + option2Count)) * 100
   } else if (choice == 2) {
+    // Remove current user's choice for display purposes
+    option2Count -= 1
+
     percentAgree = (option2Count / (option1Count + option2Count)) * 100
     percentDisagree = (option1Count / (option1Count + option2Count)) * 100
   }
