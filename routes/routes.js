@@ -67,7 +67,11 @@ router.get('/:user/:question/results', async (req, res) => {
   const userChoice = await db.getUserChoice(userId, questionId)
 
   // Get other people's choices for this question
-  const questionStats = await db.getStats(userChoice.choiceId, questionId)
+  const questionStats = await db.getStats(
+    userId,
+    userChoice.choiceId,
+    questionId
+  )
 
   // Get how many questions are in database to inform 'next' button display
   const numberQuestions = await db.getQuestionsLength()

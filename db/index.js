@@ -104,7 +104,7 @@ async function getUserChoice(user, question, db = connection) {
 }
 
 // See what proportion of people agree with the current user
-async function getStats(choice, question, db = connection) {
+async function getStats(user, choice, question, db = connection) {
   // Get option_1_count and option_2_count from db
   let option1CountObj = await db('questions')
     .where('id', question)
@@ -134,7 +134,11 @@ async function getStats(choice, question, db = connection) {
   let agreeUserNames = []
   for (userId of userChoices) {
     let userName = await db('users').where('id', userId).first().select('name')
-    agreeUserNames.push(userName.name)
+    console.log('user', user, 'userName.id', userId)
+    // Don't add current user to list
+    if (user !== userId) {
+      agreeUserNames.push(userName.name)
+    }
   }
 
   // Get strings of the questions from db
