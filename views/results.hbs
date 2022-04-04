@@ -11,8 +11,22 @@
       {{#if percentDisagreeWithUser}}
         <p><strong>{{ percentDisagreeWithUser }}%</strong> of people disagree with you.</p>
       {{/if}}
-      <p>{{ option1Count }} people chose <em>'{{ option1 }}'</em>.</p>
-      <p>{{ option2Count }} people chose <em>'{{ option2 }}'</em>.</p>
+
+      <p>{{ option1Count }} 
+      {{#if option1CountSingular}}
+        person
+      {{else}}
+        people
+      {{/if}}
+      chose <em>'{{ option1 }}'</em>.</p>
+
+      <p>{{ option2Count }}
+      {{#if option2CountSingular}}
+        person
+      {{else}}
+        people
+      {{/if}}
+       chose <em>'{{ option2 }}'</em>.</p>
     </div>
 
     {{#if agreeUserNames}}
