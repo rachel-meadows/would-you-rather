@@ -22,9 +22,17 @@ router.post('/', async (req, res) => {
   }
   // Start from the first question
   const questionId = 1
-  console.log('the users id is: ', userId)
   // Redirect to the id of the new user
   res.redirect(`/${userId[0]}/${questionId}`)
+})
+
+// POST after user clicks 'next' when there are no further questions
+// site/end
+router.post('/end', (req, res) => {
+  const data = req.body
+  const userId = Number(data.userId)
+  console.log('userId', userId)
+  res.redirect(`/${userId}/end`)
 })
 
 // GET after user clicks 'next' when there are no further questions
@@ -38,26 +46,37 @@ router.get('/:user/end', (req, res) => {
   res.render('end', viewData)
 })
 
-// POST after user clicks 'next' when there are no further questions
-// site/end
-router.post('/end', (req, res) => {
-  const data = req.body
-  const userId = Number(data.userId)
-  res.redirect(`/${userId}/end`)
+// GET add new question
+// site/:user/add
+router.get('/:user/add', (req, res) => {
+  const userId = req.params.user
+  console.log('userid is ', userId)
+  res.render('add', userId)
 })
 
-// GET add new question
+// POST go to add page
 // site/add
-router.get('/:user/add', (req, res) => {
-  res.render('add')
+router.post('/add', async (req, res) => {
+  const data = req.body
+  const userId = Number(data.userId)
+  res.redirect(`/${userId}/add`)
 })
 
 // POST add new question
 // site/add
-router.post('/add', (req, res) => {
+router.post('/add/submit', async (req, res) => {
   const data = req.body
-  const userId = Number(data.userId)
-  res.redirect(`/${userId}/add`)
+  console.log('data in POST: ', data)
+
+  const option1 = data.option1
+  const option2 = data.option2
+  const userId = data.userId
+
+  const questionObj = await db.addNewQuestion(userId, option1, option2)
+  console.log('questionObj: ', questionObj)
+  res.send('WIP')
+  // TODO: Redirect to the question just submitted
+  // res.redirect(`/${userId}/add`)
 })
 
 // GET question page

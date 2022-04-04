@@ -9,6 +9,7 @@ exports.up = function (knex) {
     table.string('option_2')
     table.integer('option_1_count')
     table.integer('option_2_count')
+    table.string('submitted_by')
   })
 }
 

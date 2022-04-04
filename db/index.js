@@ -8,6 +8,7 @@ module.exports = {
   getUserChoice,
   getStats,
   getQuestionsLength,
+  addNewQuestion,
 }
 
 //
@@ -175,8 +176,8 @@ async function getStats(user, choice, question, db = connection) {
     option2: option2,
     option1Count: option1Count,
     option2Count: option2Count,
-    percentAgreeWithUser: percentAgree.toFixed(1),
-    percentDisagreeWithUser: percentDisagree.toFixed(1),
+    percentAgreeWithUser: percentAgree.toFixed(1) || false,
+    percentDisagreeWithUser: percentDisagree.toFixed(1) || false,
     agreeUserNames: agreeUserNames,
   }
 }
@@ -184,4 +185,17 @@ async function getStats(user, choice, question, db = connection) {
 async function getQuestionsLength(db = connection) {
   const questionsArray = await db('questions').select()
   return questionsArray.length
+}
+
+async function addNewQuestion(userId, option1, option2, db = connection) {
+  const user = await getUser(userId)
+  return db('questions')
+    .insert({
+      option_1: option1,
+      option_2: option2,
+      option_1_count: 0,
+      option_2_count: 0,
+      submitted_by: user,
+    })
+    .select('id')
 }
