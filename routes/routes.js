@@ -31,7 +31,6 @@ router.post('/', async (req, res) => {
 router.post('/end', (req, res) => {
   const data = req.body
   const userId = Number(data.userId)
-  console.log('userId', userId)
   res.redirect(`/${userId}/end`)
 })
 
@@ -46,37 +45,34 @@ router.get('/:user/end', (req, res) => {
   res.render('end', viewData)
 })
 
-// GET add new question
-// site/:user/add
-router.get('/:user/add', (req, res) => {
-  const userId = req.params.user
-  console.log('userid is ', userId)
-  res.render('add', userId)
-})
-
 // POST go to add page
-// site/add
+// site/user/add
 router.post('/add', async (req, res) => {
   const data = req.body
   const userId = Number(data.userId)
   res.redirect(`/${userId}/add`)
 })
 
+// GET add page with user ID retained
+router.get('/:user/add', async (req, res) => {
+  const data = req.params
+  const userId = Number(data.user)
+  const viewData = {
+    userId,
+  }
+  res.render('add', viewData)
+})
+
 // POST add new question
-// site/add
+// site/add/submit
 router.post('/add/submit', async (req, res) => {
   const data = req.body
-  console.log('data in POST: ', data)
-
   const option1 = data.option1
   const option2 = data.option2
-  const userId = data.userId
+  const userId = Number(data.userId)
 
-  const questionObj = await db.addNewQuestion(userId, option1, option2)
-  console.log('questionObj: ', questionObj)
-  res.send('WIP')
-  // TODO: Redirect to the question just submitted
-  // res.redirect(`/${userId}/add`)
+  const questionId = await db.addNewQuestion(userId, option1, option2)
+  res.redirect(`/${userId}/${questionId}`)
 })
 
 // GET question page

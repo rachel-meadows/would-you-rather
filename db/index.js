@@ -195,7 +195,7 @@ async function addNewQuestion(userId, option1, option2, db = connection) {
       option_2: option2,
       option_1_count: 0,
       option_2_count: 0,
-      submitted_by: user,
+      submitted_by: user.id,
     })
     .select('id')
 }
