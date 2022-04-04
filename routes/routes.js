@@ -152,6 +152,7 @@ router.get('/:user/:question/results', async (req, res) => {
     agreeUserNames: questionStats.agreeUserNames,
     showBack: questionId > 1,
     showNext: questionId < numberQuestions,
+    userIsFirstAnswer: option1Count + option2Count === 0,
   }
   res.render('results', viewData)
 })

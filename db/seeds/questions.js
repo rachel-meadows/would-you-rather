@@ -30,5 +30,13 @@ exports.seed = async function (knex) {
       option_2_count: 0,
       submitted_by: 'Bob',
     },
+    {
+      id: 4,
+      option_1: 'This question has not yet been answered',
+      option_2: '.',
+      option_1_count: 0,
+      option_2_count: 0,
+      submitted_by: 'Bob',
+    },
   ])
 }
