@@ -2,6 +2,8 @@
 
 This is a simple game that associates users with their answers to a 'would you rather' question.
 
+Please note that it is deployed with the free version of Heroku, so may take several seconds to load the first time you open it.
+
 ## Origins:
 
 An earlier version of this game was developed as a Friday group project (essentially a one-day hackathon).
